@@ -5,7 +5,7 @@
 ### Учасники:
 - Степанюк Роман ([@rmnstepaniuk](https://t.me/rmnstepaniuk))
 - Желепа Валентин ([@zlatanmlg](https://t.me/zlatanmlg))
-- Кучеренко Іван (@\_iku4er\_)
+- Кучеренко Іван ([@IKu4er](https://t.me/IKu4er))
 
 ## Завдання
 
