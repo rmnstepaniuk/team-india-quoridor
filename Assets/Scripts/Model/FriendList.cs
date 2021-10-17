@@ -7,6 +7,7 @@ public class FriendList : MonoBehaviour
 
     public List<GameObject> friendList;
     public GameManager gm;
+    public bool friendsChecked = false;
 
     private void Start()
     {
@@ -31,6 +32,54 @@ public class FriendList : MonoBehaviour
             {
                 player.MoveToSquare(this.gameObject);
             }
+
+            player.opponent.BotMove();
         }
     }
+
+    public bool canReachExit(int price)
+    {
+        List<GameObject> reachableFriends = new List<GameObject>(friendList);
+        friendsChecked = true;
+        bool notAllFriendsChecked = true;
+        while (notAllFriendsChecked)
+        {
+            notAllFriendsChecked = false;
+            foreach (GameObject friend in reachableFriends)
+            {
+                if (!friend.GetComponent<FriendList>().friendsChecked)
+                {
+                    foreach (GameObject friend2 in friend.GetComponent<FriendList>().friendList)
+                    {
+                        if (!reachableFriends.Contains(friend2))
+                        {
+                            reachableFriends.Add(friend2);
+                        }
+                    }
+                    friend.GetComponent<FriendList>().friendsChecked = true;
+                    notAllFriendsChecked = true;
+                    break;
+                }
+            }
+        }
+
+        friendsChecked = false;
+        foreach (GameObject friend in reachableFriends)
+        {
+            friend.GetComponent<FriendList>().friendsChecked = false;
+        }
+
+        foreach (GameObject friend in reachableFriends)
+        {
+            if (friend.GetComponent<FindFriends>().price == price)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+
 }
