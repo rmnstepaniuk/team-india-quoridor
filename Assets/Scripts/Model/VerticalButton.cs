@@ -41,18 +41,89 @@ public class VerticalButton : MonoBehaviour
                         downfriendList.RemoveFriend(DiagonalFriendFinder.GetComponent<FindFriends>().DNotFriend);
                         DiagonalFriendFinder.GetComponent<FindFriends>().DNotFriend.GetComponent<FriendList>().RemoveFriend(BottomFriendFinder.GetComponent<FindFriends>().BNotFriend);
                         player.GetComponent<Player>().walls -= 1;
+
+                        foreach (Player player1 in gm.playerList)
+                        {
+
+                            bool reachCheck;
+                            if (player1.playerType == Player.PlayerType.Player1)
+                            {
+                                reachCheck = player1.currentSquare.GetComponent<FriendList>().canReachExit(7);
+                            }
+                            else
+                            {
+                                reachCheck = player1.currentSquare.GetComponent<FriendList>().canReachExit(1);
+                            }
+                            if (!reachCheck)
+                            {
+                                friendList.addFriend(RightFriendFinder.GetComponent<FindFriends>().RNotFriend);
+                                RightFriendFinder.GetComponent<FindFriends>().RNotFriend.GetComponent<FriendList>().addFriend(friendBase);
+                                downfriendList.addFriend(DiagonalFriendFinder.GetComponent<FindFriends>().DNotFriend);
+                                DiagonalFriendFinder.GetComponent<FindFriends>().DNotFriend.GetComponent<FriendList>().addFriend(BottomFriendFinder.GetComponent<FindFriends>().BNotFriend);
+                                player.GetComponent<Player>().walls += 1;
+                                wall.SetActive(false);
+                                return;
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        return;
                     }
                 }
-            }
 
-            foreach (Player player in gm.playerList)
+            }
+            foreach (Player player1 in gm.playerList)
             {
-                player.WallPassTurn();
+                player1.WallPassTurn();
+                player1.BotMove();
             }
-
-
         }
 
 
     }
+
+    //public bool canReachExit(int price)
+    //{
+    //    List<GameObject> reachableFriends = friendList.friendList;
+    //    friendBase.GetComponent<FriendList>().friendsChecked = true;
+    //    bool notAllFriendsChecked = true;
+    //    while (notAllFriendsChecked)
+    //    {
+    //        notAllFriendsChecked = false;
+    //        foreach (GameObject friend in reachableFriends)
+    //        {
+    //            if (!friend.GetComponent<FriendList>().friendsChecked)
+    //            {
+    //                foreach (GameObject friend2 in friend.GetComponent<FriendList>().friendList)
+    //                {
+    //                    if (!reachableFriends.Contains(friend2))
+    //                    {
+    //                        reachableFriends.Add(friend2);
+    //                    }
+    //                }
+    //                friend.GetComponent<FriendList>().friendsChecked = true;
+    //                notAllFriendsChecked = true;
+    //                break;
+    //            }
+    //        }
+    //    }
+
+    //    friendBase.GetComponent<FriendList>().friendsChecked = false;
+    //    foreach (GameObject friend in reachableFriends)
+    //    {
+    //        friend.GetComponent<FriendList>().friendsChecked = false;
+    //    }
+
+    //    foreach (GameObject friend in reachableFriends)
+    //    {
+    //        if (friend.GetComponent<FindFriends>().price == price)
+    //        {
+    //            return true;
+    //        }
+    //    }
+
+    //    return false;
+    //}
 }

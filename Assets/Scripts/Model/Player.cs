@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
 
     public int walls;
 
-    private Player opponent;
+    public Player opponent;
     public bool myTurn = false;
 
     public GameObject currentSquare;
@@ -52,6 +52,46 @@ public class Player : MonoBehaviour
             myTurn = false;
         }
     }
+
+    public void BotMove()
+    {
+        List<GameObject> squarelist;
+        GameObject square;
+        if (gm.gameState == GameManager.GameState.Playing)
+        {
+            if (playerType == PlayerType.Bot && myTurn == true)
+            {
+                squarelist = currentSquare.GetComponent<FriendList>().friendList;
+                int randomIndex = Random.Range(0, squarelist.Count);
+                square = squarelist[randomIndex];
+                targetSquareLocation = square.transform.position;
+                Debug.Log(square);
+                targetSquareLocation.y += 2;
+                if (opponent.currentSquare != square)
+                {
+                    this.gameObject.transform.position = targetSquareLocation;
+                    currentSquare = square;
+                }
+                else
+                {
+                    BotMove();
+                }
+                opponent.myTurn = myTurn;
+                myTurn = !myTurn;
+            }
+            
+
+        }
+        else
+        {
+            myTurn = false;
+        }
+    }
+
+    //public void Update()
+    //{
+    //    BotMove();
+    //}
 
     public void WallPassTurn()
     {

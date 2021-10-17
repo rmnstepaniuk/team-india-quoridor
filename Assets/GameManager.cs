@@ -40,6 +40,10 @@ public class GameManager : MonoBehaviour
         {
             player2WinCanvas.SetActive(true);
         }
+        else if (state == GameState.BotWin)
+        {
+            player2WinCanvas.SetActive(true);
+        }
 
     }
 
