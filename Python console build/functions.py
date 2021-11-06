@@ -20,7 +20,17 @@ def find_wall_location(move_location):
 def find_friends(square):
     for kvadrat in Startup.field:
         for i in range(9):
-            if (abs(square.coords[0]-kvadrat[i].coords[0]) == 0 and abs(square.coords[1]-kvadrat[i].coords[1]) == 1) or (abs(square.coords[0]-kvadrat[i].coords[0]) == 1 and abs(square.coords[1]-kvadrat[i].coords[1]) == 0):
+            if (abs(square.coords[1]-kvadrat[i].coords[1]) == 0 and abs(square.coords[0]-kvadrat[i].coords[0]) == 1) or (abs(square.coords[1]-kvadrat[i].coords[1]) == 1 and abs(square.coords[0]-kvadrat[i].coords[0]) == 0):
                 square.friendlist.append(kvadrat[i])
     return square.friendlist
+
+def move_decipher(player, player_move):
+    decision = player_move.split(" ")
+    location = list(decision[1])
+    if decision[0] == 'move':
+        player.move(location)
+    elif decision[0] == 'wall':
+        player.wall(location)
+    elif decision[0] == 'jump':
+        player.jump(location)
 
