@@ -48,14 +48,25 @@ class Player(object):
                 field[wall_location[0]][wall_location[1] + 1].friendlist.remove(field[wall_location[0] + 1][wall_location[1] + 1])
                 field[wall_location[0] + 1][wall_location[1]].friendlist.remove(field[wall_location[0]][wall_location[1]])
                 field[wall_location[0] + 1][wall_location[1] + 1].friendlist.remove(field[wall_location[0]][wall_location[1] + 1])
-            elif wall_location[2] == 'v':
+                wall_field[wall_location[0]][wall_location[1]] += 2
+                if wall_location[1] == 0:
+                    wall_field[wall_location[0]][wall_location[1] + 1] += 2
+                if 7 > wall_location[1] > 0:
+                    wall_field[wall_location[0]][wall_location[1] + 1] += 2
+                    wall_field[wall_location[0]][wall_location[1] - 1] += 2
+                if wall_location[1] == 7:
+                    wall_field[wall_location[0]][wall_location[1] - 1] += 2
+
+        if wall_field[wall_location[0]][wall_location[1]] < 3:
+            if wall_location[2] == 'v':
                 field[wall_location[0]][wall_location[1]].friendlist.remove(field[wall_location[0]][wall_location[1] + 1])
                 field[wall_location[0] + 1][wall_location[1]].friendlist.remove(field[wall_location[0] + 1][wall_location[1] + 1])
                 field[wall_location[0]][wall_location[1] + 1].friendlist.remove(field[wall_location[0]][wall_location[1]])
                 field[wall_location[0] + 1][wall_location[1] + 1].friendlist.remove(field[wall_location[0] + 1][wall_location[1]])
+                wall_field[wall_location[0]][wall_location[1]] += 3
             #print("Wall placed on ", wall_location)
             self.walls -= 1
-            wall_field[wall_location[0]][wall_location[1]] += 1
+
         #else:
             #print("You can place it here")
             # self.pass_turn()

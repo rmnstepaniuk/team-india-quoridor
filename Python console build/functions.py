@@ -8,6 +8,12 @@ def find_location(move_location):
     location[0] = int(move_location[1]) - 1
     return location
 
+def write_jump_location(write_location):
+    position1 = list(Startup.key_list1)[list(Startup.val_list1).index(write_location[1])]
+    move_address = position1 + str(write_location[0] + 1)
+    #print(move_address)
+    return move_address
+
 def find_wall_location(move_location):
     location = [0, 0, 0]
     move_location = list(move_location)
